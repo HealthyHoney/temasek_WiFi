@@ -2008,6 +2008,8 @@ public final class WifiP2pServiceImpl extends IWifiP2pManager.Stub {
                             loge("Failed to add iface to local network " + e);
                         } catch (IllegalStateException ie) {
                             loge("Failed to add iface to local network " + ie);
+                        } catch (IllegalArgumentException e) {
+                            loge("Failed to add iface to local network " + e);
                         }
                     } else {
                         loge("DHCP failed");
