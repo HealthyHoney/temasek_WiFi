@@ -6459,6 +6459,9 @@ public class WifiStateMachine extends StateMachine {
                     break;
                 case WifiMonitor.AUTHENTICATION_FAILURE_EVENT:
                     mSupplicantStateTracker.sendMessage(WifiMonitor.AUTHENTICATION_FAILURE_EVENT);
+                    mWifiConfigStore.handleSSIDStateChange(mLastNetworkId, false, "",
+                        mWifiInfo.getBSSID());
+
                     if ((mScreenOn == false) && mEnableBackgroundScan) {
                          // Background SCAN should trigger to initiate
                          // connection attempt on authentication failure.
