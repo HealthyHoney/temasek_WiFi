@@ -701,7 +701,7 @@ public class WifiStateMachine extends StateMachine {
      * point on the move. {@link Settings.Global#WIFI_FRAMEWORK_SCAN_INTERVAL_MS} can
      * override this.
      */
-    private final int mDefaultFrameworkScanIntervalMs;
+    private int mDefaultFrameworkScanIntervalMs = 40000;
 
     private int mDefaultDisconnectedScanIntervelWhenP2pConnected = 180000;
 
@@ -1210,7 +1210,7 @@ public class WifiStateMachine extends StateMachine {
     /* This is set from the overlay config file or from a secure setting.
      * A value of 0 disables scanning in the framework.
      */
-    private long mFrameworkScanIntervalMs = 10000;
+    private long mFrameworkScanIntervalMs = 40000;
 
     private AtomicInteger mDelayedScanCounter = new AtomicInteger();
 
