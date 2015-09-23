@@ -8224,9 +8224,11 @@ public class WifiStateMachine extends StateMachine {
                         // not be processed) and restart the scan
                         int period =  mDisconnectedScanPeriodMs;
                         if (mP2pConnected.get()) {
+                           int defaultInterval = mContext.getResources().getInteger(
+                                    R.integer.config_wifi_scan_interval_p2p_connected);
                            period = (int)Settings.Global.getLong(mContext.getContentResolver(),
                                     Settings.Global.WIFI_SCAN_INTERVAL_WHEN_P2P_CONNECTED_MS,
-                                    mDisconnectedScanPeriodMs);
+                                    defaultInterval);
                         }
                         if (mWifiConfigStore.getConfiguredNetworks().size() == 0) {
                             period = (int)mFrameworkScanIntervalMs;
