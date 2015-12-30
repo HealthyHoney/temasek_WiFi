@@ -3203,10 +3203,9 @@ public class WifiStateMachine extends StateMachine {
         if (DBG) logd("backgroundScan enabled=" + mEnableBackgroundScan
                 + " startBackgroundScanIfNeeded:" + startBackgroundScanIfNeeded);
         if (startBackgroundScanIfNeeded) {
-            if (mEnableBackgroundScan) {
-                if (!enableBackgroundScan(true)) {
-                    handlePnoFailError();
-                }
+            // to scan for them in background, we need all networks enabled
+            if(!enableBackgroundScan(mEnableBackgroundScan)) {
+               handlePnoFailError();
             }
         }
         if (DBG) log("handleScreenStateChanged Exit: " + screenOn);
@@ -4091,6 +4090,9 @@ public class WifiStateMachine extends StateMachine {
             return true;
         } catch (RemoteException e) {
             return false;
+        } catch (IllegalStateException ie) {
+           loge("Unable to set interface config: " + ie);
+           return false;
         }
     }
 
