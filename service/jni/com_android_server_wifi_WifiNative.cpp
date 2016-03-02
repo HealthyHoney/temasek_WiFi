@@ -246,8 +246,9 @@ static jobject createScanResult(JNIEnv *env, wifi_scan_result *result) {
     setStringField(env, scanResult, "SSID", result->ssid);
 
     char bssid[32];
-    sprintf(bssid, "%02x:%02x:%02x:%02x:%02x:%02x", result->bssid[0], result->bssid[1],
-        result->bssid[2], result->bssid[3], result->bssid[4], result->bssid[5]);
+    snprintf(bssid, sizeof(bssid), "%02x:%02x:%02x:%02x:%02x:%02x",
+             result->bssid[0], result->bssid[1], result->bssid[2],
+             result->bssid[3], result->bssid[4], result->bssid[5]);
 
     setStringField(env, scanResult, "BSSID", bssid);
 
@@ -514,7 +515,7 @@ static jobject android_net_wifi_getScanResults(
             setStringField(env, scanResult, "SSID", results[i].ssid);
 
             char bssid[32];
-            sprintf(bssid, "%02x:%02x:%02x:%02x:%02x:%02x", results[i].bssid[0],
+            snprintf(bssid, sizeof(bssid), "%02x:%02x:%02x:%02x:%02x:%02x", results[i].bssid[0],
                     results[i].bssid[1], results[i].bssid[2], results[i].bssid[3],
                     results[i].bssid[4], results[i].bssid[5]);
 
@@ -647,7 +648,7 @@ static void onHotlistApFound(wifi_request_id id,
         setStringField(env, scanResult, "SSID", results[i].ssid);
 
         char bssid[32];
-        sprintf(bssid, "%02x:%02x:%02x:%02x:%02x:%02x", results[i].bssid[0], results[i].bssid[1],
+        snprintf(bssid, sizeof(bssid), "%02x:%02x:%02x:%02x:%02x:%02x", results[i].bssid[0], results[i].bssid[1],
             results[i].bssid[2], results[i].bssid[3], results[i].bssid[4], results[i].bssid[5]);
 
         setStringField(env, scanResult, "BSSID", bssid);
@@ -704,8 +705,8 @@ static jboolean android_net_wifi_setHotlist(
         memcpy(addr, params.ap[i].bssid, sizeof(mac_addr));
 
         char bssidOut[32];
-        sprintf(bssidOut, "%0x:%0x:%0x:%0x:%0x:%0x", addr[0], addr[1],
-            addr[2], addr[3], addr[4], addr[5]);
+        snprintf(bssidOut, sizeof(bssidOut), "%0x:%0x:%0x:%0x:%0x:%0x", addr[0],
+                 addr[1], addr[2], addr[3], addr[4], addr[5]);
 
         ALOGD("Added bssid %s", bssidOut);
 
@@ -761,8 +762,9 @@ void onSignificantWifiChange(wifi_request_id id,
         // setStringField(env, scanResult, "SSID", results[i].ssid);
 
         char bssid[32];
-        sprintf(bssid, "%02x:%02x:%02x:%02x:%02x:%02x", result.bssid[0], result.bssid[1],
-            result.bssid[2], result.bssid[3], result.bssid[4], result.bssid[5]);
+        snprintf(bssid, sizeof(bssid), "%02x:%02x:%02x:%02x:%02x:%02x",
+                 result.bssid[0], result.bssid[1], result.bssid[2],
+                 result.bssid[3], result.bssid[4], result.bssid[5]);
 
         setStringField(env, scanResult, "BSSID", bssid);
 
@@ -825,8 +827,8 @@ static jboolean android_net_wifi_trackSignificantWifiChange(
         memcpy(params.ap[i].bssid, addr, sizeof(mac_addr));
 
         char bssidOut[32];
-        sprintf(bssidOut, "%02x:%02x:%02x:%02x:%02x:%02x", addr[0], addr[1],
-            addr[2], addr[3], addr[4], addr[5]);
+        snprintf(bssidOut, sizeof(bssidOut), "%02x:%02x:%02x:%02x:%02x:%02x",
+                 addr[0], addr[1], addr[2], addr[3], addr[4], addr[5]);
 
         params.ap[i].low = getIntField(env, objAp, "low");
         params.ap[i].high = getIntField(env, objAp, "high");
@@ -975,8 +977,9 @@ static void onRttResults(wifi_request_id id, unsigned num_results, wifi_rtt_resu
         }
 
         char bssid[32];
-        sprintf(bssid, "%02x:%02x:%02x:%02x:%02x:%02x", result.addr[0], result.addr[1],
-            result.addr[2], result.addr[3], result.addr[4], result.addr[5]);
+        snprintf(bssid, sizeof(bssid), "%02x:%02x:%02x:%02x:%02x:%02x",
+                 result.addr[0], result.addr[1], result.addr[2],
+                 result.addr[3], result.addr[4], result.addr[5]);
 
         setStringField(env, rttResult, "bssid", bssid);
         setIntField(env,  rttResult, "status",               result.status);
